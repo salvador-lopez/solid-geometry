@@ -15,26 +15,22 @@ class CalculateBoxOverlapVolumeUseCase
      */
     public function execute(CalculateBoxOverlapVolumeRequest $request)
     {
-        $firstBoxParams = $request->getFirstBoxParams();
-        $firstBoxPointParams = $firstBoxParams['point'];
-        $firstBoxVectorParams = $firstBoxParams['vector'];
-
-        $firstBox = Box::fromPointAndVector(
-            new Point($firstBoxPointParams['x'], $firstBoxPointParams['y'], $firstBoxPointParams['z']),
-            new Vector($firstBoxVectorParams['x'], $firstBoxVectorParams['y'], $firstBoxVectorParams['z'])
-        );
-
-        $secondBoxParams = $request->getSecondBoxParams();
-        $secondBoxPointParams = $secondBoxParams['point'];
-        $secondBoxVectorParams = $secondBoxParams['vector'];
-
-        $secondBox = Box::fromPointAndVector(
-            new Point($secondBoxPointParams['x'], $secondBoxPointParams['y'], $secondBoxPointParams['z']),
-            new Vector($secondBoxVectorParams['x'], $secondBoxVectorParams['y'], $secondBoxVectorParams['z'])
-        );
+        $firstBox = $this->buildBoxFromRequestParams($request->getFirstBoxParams());
+        $secondBox = $this->buildBoxFromRequestParams($request->getSecondBoxParams());
 
         $overlapBox = $firstBox->overlap($secondBox);
 
         return $overlapBox->volume();
+    }
+
+    private function buildBoxFromRequestParams(array $boxParams): Box
+    {
+        $boxPointParams = $boxParams['point'];
+        $boxVectorParams = $boxParams['vector'];
+
+        return Box::fromPointAndVector(
+            new Point($boxPointParams['x'], $boxPointParams['y'], $boxPointParams['z']),
+            new Vector($boxVectorParams['x'], $boxVectorParams['y'], $boxVectorParams['z'])
+        );
     }
 }
