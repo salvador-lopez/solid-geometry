@@ -7,15 +7,25 @@ use SolidGeometry\Domain\Vector\ValueObject\Vector;
 
 class Box
 {
+    /**
+     * @var Point
+     */
     private $minPoint;
 
+    /**
+     * @var Point
+     */
     private $maxPoint;
 
     public static function fromPointAndVector(Point $point, Vector $vector)
     {
-        $maxPoint = $point->addVector($vector);
+        $secondPoint = $point->addVector($vector);
 
-        return new static($point, $maxPoint);
+        if ($point->greaterThan($secondPoint)) {
+            return new static($secondPoint, $point);
+        }
+
+        return new static($point, $secondPoint);
     }
 
     private function __construct(Point $minPoint, Point $maxPoint)
@@ -45,11 +55,11 @@ class Box
 
     public function volume() : int
     {
-        return (
+        return abs((
             ($this->maxPoint->getX() - $this->minPoint->getX()) *
             ($this->maxPoint->getY() - $this->minPoint->getY()) *
             ($this->maxPoint->getZ() - $this->minPoint->getY())
-        );
+        ));
     }
 
     private function intersect(Box $box) : bool

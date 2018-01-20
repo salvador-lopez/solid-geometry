@@ -42,4 +42,9 @@ class Point
 
         return new self($x, $y, $z);
     }
+
+    public function greaterThan(Point $point)
+    {
+        return $this->getX() > $point->getX() && $this->getY() > $point->getZ() && $this->getZ() > $point->getZ();
+    }
 }
