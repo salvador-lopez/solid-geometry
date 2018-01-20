@@ -21,11 +21,10 @@ class Box
     {
         $secondPoint = $point->addVector($vector);
 
-        if ($point->greaterThan($secondPoint)) {
-            return new static($secondPoint, $point);
-        }
-
-        return new static($point, $secondPoint);
+        return new static(
+            $point->getPointWithMinCoordinates($secondPoint),
+            $point->getPointWithMaxCoordinates($secondPoint)
+        );
     }
 
     private function __construct(Point $minPoint, Point $maxPoint)
@@ -58,7 +57,7 @@ class Box
         return abs((
             ($this->maxPoint->getX() - $this->minPoint->getX()) *
             ($this->maxPoint->getY() - $this->minPoint->getY()) *
-            ($this->maxPoint->getZ() - $this->minPoint->getY())
+            ($this->maxPoint->getZ() - $this->minPoint->getZ())
         ));
     }
 

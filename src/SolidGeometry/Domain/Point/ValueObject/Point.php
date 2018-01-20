@@ -43,8 +43,39 @@ class Point
         return new self($x, $y, $z);
     }
 
-    public function greaterThan(Point $point)
+    public function getPointWithMinCoordinates(Point $point)
     {
-        return $this->getX() > $point->getX() && $this->getY() > $point->getZ() && $this->getZ() > $point->getZ();
+        $minPointX = $this->getMinCoordinate($this->getX(), $point->getX());
+        $minPointY = $this->getMinCoordinate($this->getY(), $point->getY());
+        $minPointZ = $this->getMinCoordinate($this->getZ(), $point->getZ());
+
+        return new static($minPointX, $minPointY, $minPointZ);
+    }
+
+    public function getPointWithMaxCoordinates(Point $point)
+    {
+        $maxPointX = $this->getMaxCoordinate($this->getX(), $point->getX());
+        $maxPointY = $this->getMaxCoordinate($this->getY(), $point->getY());
+        $maxPointZ = $this->getMaxCoordinate($this->getZ(), $point->getZ());
+
+        return new static($maxPointX, $maxPointY, $maxPointZ);
+    }
+
+    private function getMinCoordinate(int $firstCoordinate, int $secondCoordinate)
+    {
+        if ($firstCoordinate < $secondCoordinate) {
+            return $firstCoordinate;
+        }
+
+        return $secondCoordinate;
+    }
+
+    private function getMaxCoordinate(int $firstCoordinate, int $secondCoordinate)
+    {
+        if ($firstCoordinate > $secondCoordinate) {
+            return $firstCoordinate;
+        }
+
+        return $secondCoordinate;
     }
 }

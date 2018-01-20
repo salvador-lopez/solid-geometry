@@ -67,6 +67,16 @@ class CalculateBoxOverlapVolumeUseCaseTest extends TestCase
                 ['point' => ['x' => 2, 'y' => 0, 'z' => 0], 'vector' => ['x' => -1, 'y' => 1, 'z' => 1]],
                 1,
             ],
+            'Test 8: Expected intersection and return volume of 6' => [
+                ['point' => ['x' => 2, 'y' => 2, 'z' => 2], 'vector' => ['x' => -4, 'y' => -2, 'z' => 4]],
+                ['point' => ['x' => 0, 'y' => 1, 'z' => 3], 'vector' => ['x' => 3, 'y' => 1, 'z' => 3]],
+                6,
+            ],
+            'Test 9: Expected intersection and return volume of 1' => [
+                ['point' => ['x' => 2, 'y' => 1, 'z' => 2], 'vector' => ['x' => -2, 'y' => 2, 'z' => -2]],
+                ['point' => ['x' => 2, 'y' => 3, 'z' => 3], 'vector' => ['x' => -1, 'y' => -1, 'z' => -2]],
+                1,
+            ],
         ];
     }
 }
